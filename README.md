@@ -1,4 +1,4 @@
-# iSCSI-targetd provisioner 
+# iSCSI-targetd provisioner
 
 iSCSI-targetd provisioner is an out of tree provisioner for iSCSI storage for
 Kubernetes and OpenShift.  The provisioniner uses the API provided by
@@ -39,9 +39,9 @@ targetd.  There is a bug filed:
 https://bugzilla.redhat.com/show_bug.cgi?id=1451139 Until this bug is
 resolve, SELinux must be set to permissive mode on Fedora 25+.
 
-For RHEL and Centos make sure you install targetd >= 0.8.6-1 as in 
-previous versions there a bug that prevented exposing a volume to more 
-than one initiator 
+For RHEL and Centos make sure you install targetd >= 0.8.6-1 as in
+previous versions there a bug that prevented exposing a volume to more
+than one initiator
 
 ### A note about names
 
@@ -99,7 +99,7 @@ sudo vgcreate vg-targetd $LOOP
 
 Logical Volumes created in a volume group are thick provisioned by
 default, i.e. space is reserved at time of creation.  Optionally, a
-LVM can use a thin provisioning pool to create thin provisioned volumes.  
+LVM can use a thin provisioning pool to create thin provisioned volumes.
 
 To create a thin provisioning pool, called `pool` this example,
 execute the following commands:
@@ -164,11 +164,11 @@ sudo systemctl start targetd
 The default configuration requires that port 3260/tcp, 3260/udp and
 18700/tcp be open on the iSCSI server.
 
-If using `firewalld`, 
+If using `firewalld`,
 
 ```
 firewall-cmd --add-service=iscsi-target --permanent
-firewall-cmd --add-port=18700/tcp --permanent 
+firewall-cmd --add-port=18700/tcp --permanent
 firewall-cmd --reload
 ```
 
@@ -261,10 +261,10 @@ provisioner: iscsi-targetd
 parameters:
 # this id where the iscsi server is running
   targetPortal: 192.168.99.100:3260
-  
-# this is the iscsi server iqn  
+
+# this is the iscsi server iqn
   iqn: iqn.2003-01.org.linux-iscsi.minishift:targetd
-  
+
 # this is the iscsi interface to be used, the default is default
 # iscsiInterface: default
 
@@ -272,14 +272,14 @@ parameters:
 # volumeGroup: vg-targetd
 
 # this is a comma separated list of initiators that will be give access to the created volumes, they must correspond to what you have configured in your nodes.
-  initiators: iqn.2017-04.com.example:node1 
-  
-# whether or not to use chap authentication for discovery operations  
+  initiators: iqn.2017-04.com.example:node1
+
+# whether or not to use chap authentication for discovery operations
   chapAuthDiscovery: "true"
- 
-# whether or not to use chap authentication for session operations  
-  chapAuthSession: "true" 
-  
+
+# whether or not to use chap authentication for session operations
+  chapAuthSession: "true"
+
 ```
 you can create one with the following command in kubernetes
 
@@ -356,6 +356,10 @@ ansible-playbook -i <your inventory file> ansible/playbook/all.yaml
 If you enable iSCSI CHAP-based authentication, the ansible installer will set the target configuration consinstently and also configure the storage class.
 However at provisioning time the provisioner will not setup the chap secret. Having the permissions to setup a secret in any namespace would make the provisioner too powerful and insecure.
 So, it is up to the project administrator to setup the secret.
-The name of the expected secret name will be `<provisioner-name>-chap-secret` 
+The name of the expected secret name will be `<provisioner-name>-chap-secret`
 An example of the secret format can be found [here](./openshift/iscsi-chap-secret.yaml)
 
+
+# Code of conduct
+
+Participation in the Kubernetes community is governed by the [Kubernetes Code of Conduct](code-of-conduct.md).
